@@ -1,0 +1,142 @@
+body {
+  background-color: lavender;
+  font-family: 'Amatic SC', cursive;
+  font-size: 170%;
+}
+
+.enter {
+  border-style: solid;
+  border-width: 10px;
+  border-color: lightsteelblue;
+  text-align: center;
+}
+
+.greetDiv {
+  margin-left: 20%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.warningName {
+  font-size: 85%;
+  color: red;
+  font-weight: bold;
+}
+
+.warningLang {
+  font-size: 85%;
+  color: red;
+  font-weight: bold;
+}
+
+.warningBoth, .validName {
+  font-size: 85%;
+  color: red;
+  font-weight: bold;
+}
+
+.myGreet {
+  text-align: center;
+  font-size: 180%;
+}
+
+.myCount {
+  font-size: 130%;
+}
+
+.radioBtns {
+  display: inline-block;
+}
+
+.greet {
+  background-color: white;
+  color: black;
+  border: 2px solid rgb(189, 184, 184);
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.Reset {
+  background-color: white;
+  color: black;
+  border: 2px solid rgb(189, 184, 184);
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.Reset:hover {
+  background-color: rgb(189, 184, 184);
+  color: white;
+}
+
+.greet:hover {
+  background-color: rgb(189, 184, 184);
+  color: white;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.counter {
+  float: right;
+  text-align: center;
+  margin-left: 79%;
+  
+}
+
+@media (min-width:800px) {
+  .greetDiv {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:320px) {
+  .enter {
+    border: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .radioBtns {
+    display: flex;
+    flex-direction: column;
+  }
+  .Afrikaans {
+    margin: 5%;
+  }
+  .english {
+    margin: 5%;
+  }
+  .isixhosa {
+    margin: 5%;
+  }
+  .counter {
+    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+  }
+  .greetDiv{
+    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+  }
+}
