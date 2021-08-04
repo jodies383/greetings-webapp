@@ -6,7 +6,6 @@ const handlebarSetup = exphbs({
     layoutsDir: './views/layouts'
 });
 
-
 const bodyParser = require('body-parser');
 const theGreet = require('./greetFactory');
 const app = express();
@@ -22,12 +21,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 let message = ""
+let warnings = ""
 
 app.get('/', function (req, res) {
 
     res.render('index', {
 
-        greetMessage: message
+        greetMessage: message,
+        warningName: warnings
     });
     console.log(message);
 });
@@ -45,13 +46,22 @@ app.post('/greet', function (req, res) {
         message = "Hello " + greetings.getName()
     } else if (req.body.languages === "Afrikaans") {
         message = "Goeie More " + greetings.getName()
-
-    } else if (req.body.languages === "isiXhosa") {
+    }
+    else if (req.body.languages === "isiXhosa") {
         message = "Molo " + greetings.getName()
     }
-        res.redirect('/');
+    // else if (greetings.getName() === "" && !req.body.languages) {
+    //     message = "Please enter your name and select a language"
 
-    });
+    // }
+    // else if (greetings.getName() === "" && req.body.languages) {
+    //     message = "Please enter your name"
+    // } else if (!req.body.languages) {
+    //     message = "Please select a language"
+    // }
+    res.redirect('/');
+
+});
 
 
 const PORT = process.env.PORT || 3011;
