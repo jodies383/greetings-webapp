@@ -2,7 +2,8 @@ module.exports = function theGreet(existingNames) {
 
     let theName;
     let theMessage;
-    let warnings;
+
+    let actionList = [];
 
 
     var namesGreeted = existingNames || []
@@ -14,7 +15,6 @@ module.exports = function theGreet(existingNames) {
         if (!namesGreeted.includes(theName.toUpperCase()) && regex.test(theName.toUpperCase()) && checkedRadioBtn) {
             namesGreeted.push(theName.toUpperCase())
         }
-        // localStorage.setItem('namesList', JSON.stringify(namesGreeted));
 
     }
     function returnNames() {
@@ -39,40 +39,52 @@ module.exports = function theGreet(existingNames) {
 
             theMessage = ("Hello, " + theName)
         }
-        else if (action === "Afrikaans" && regex.test(theName.toUpperCase())) {
+        else if (action === "Swedish" && regex.test(theName.toUpperCase())) {
 
-            theMessage = ("Goeie More, " + theName)
+            theMessage = ("Hallå, " + theName)
         }
-        else if (action === "isiXhosa" && regex.test(theName.toUpperCase())) {
+        else if (action === "Dutch" && regex.test(theName.toUpperCase())) {
 
-            theMessage = ("Molo, " + theName)
+            theMessage = ("Hallo, " + theName)
 
 
         } else theMessage = ("");
+
+        actionList.push({
+            type: action,
+            namesGreeted,
+            timestamp: new Date()
+
+        });
+    }
+    function actions() {
+        return actionList;
     }
 
+    function actionsFor(type) {
+        const filteredActions = [];
+
+        for (let index = 0; index < actionList.length; index++) {
+            const action = actionList[index];
+            if (action.type === type) {
+                filteredActions.push(action);
+            }
+        }
+
+        return filteredActions;
+
+    }
     function returnMessage() {
         return theMessage;
     }
 
-    function warnMessage(checkedRadioBtn) {
-        if (!theName && !checkedRadioBtn) {
-            warnings = ("Please enter your name and select a language");
-        } else if (!regex.test(theName)) {
-            warnings = ("Please enter a name");
 
-        } else if (regex.test(theName) && !checkedRadioBtn) {
-            warnings = ("Please select a language");
-        } else {
-            warnings = ("");
-        }
-    }
     function returnWarn() {
         return warnings;
     }
-    function removeValidName(param1) {
+    function removeValidName() {
 
-        if (param1 && regex.test(param1)) {
+        if (regex.test(theName)) {
             return ("");
 
         }
@@ -80,17 +92,17 @@ module.exports = function theGreet(existingNames) {
             return ("Please enter a name");
         }
     }
-    function noName(param1, checkedRadioBtn) {
+    function noName(checkedRadioBtn) {
 
-        if ((!param1 && !checkedRadioBtn)) {
+        if ((!theName && !checkedRadioBtn)) {
 
             return ("Please enter your name and select a language");
 
         } else return ("")
     }
 
-    function warnLang(param1, checkedRadioBtn) {
-        if (regex.test(param1) && !checkedRadioBtn) {
+    function warnLang(checkedRadioBtn) {
+        if (regex.test(theName) && !checkedRadioBtn) {
             return ("Please select a language");
         } else return ("")
 
@@ -107,8 +119,9 @@ module.exports = function theGreet(existingNames) {
         noName,
         returnMessage,
         warnLang,
-        warnMessage,
-        returnWarn
+        returnWarn,
+        actions,
+        actionsFor
 
 
 

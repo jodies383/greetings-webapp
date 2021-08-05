@@ -5,12 +5,15 @@
     <link rel="stylesheet" href="greet.css">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Greetings</title>
 </head>
 
 <body>
@@ -28,9 +31,12 @@
             <span class="{{greetMessage}}">{{greetMessage}}</span>
         </div>
 
-        <div class="warning">
-            <span class="{{warningName}}">{{warningName}}</span>
+        {{#if messages.info}}
+        <div class="entry">
+            <h1> {{messages.info}}</h1>
         </div>
+        {{/if}}
+
 
         <div>
 
@@ -43,13 +49,13 @@
                         <input type="radio" name="languages" class="langRadio" value="English">
                         <span class="label-body">English</span>
                     </label>
-                    <label class="Afrikaans">
-                        <input type="radio" name="languages" class="langRadio" value="Afrikaans">
-                        <span class="label-body">Afrikaans</span>
+                    <label class="Swedish">
+                        <input type="radio" name="languages" class="langRadio" value="Swedish">
+                        <span class="label-body">Swedish</span>
                     </label>
-                    <label class="isixhosa">
-                        <input type="radio" name="languages" class="langRadio" value="isiXhosa">
-                        <span class="label-body">isiXhosa</span>
+                    <label class="Dutch">
+                        <input type="radio" name="languages" class="langRadio" value="Dutch">
+                        <span class="label-body">Dutch</span>
                     </label>
                 </div>
                 <div class="theBtns">
@@ -63,7 +69,9 @@
 
             <div class="counter">
                 <div class="countlabel">
-                    <p>Greet Counter:</p>
+                    <a href="/actions">
+                        <p>Greet Counter:</p>
+                    </a>
                 </div>
                 <div class="count">
                     <span class="{{myCount}}">{{myCount}}</span>

@@ -21,8 +21,8 @@ body {
   text-align: center;
 }
 
-.warning {
-  font-size: 80%;
+.entry {
+  font-size: 38%;
   color: #e66962;
   font-weight: bold;
 }
@@ -96,6 +96,21 @@ input[type=text], select {
 .counter {
   text-align: center;
 }
+.row{
+  text-align: center;
+}
+
+th,
+td {
+  width: 42%;
+  padding: 12px 15px;
+  border-bottom: 1px solid #E1E1E1; 
+}
+
+.countlabel a:link{
+  text-decoration: none;
+}
+
 
 @media (min-width:800px) {
   .greetDiv {
@@ -114,15 +129,6 @@ input[type=text], select {
   .radioBtns {
     display: flex;
     flex-direction: column;
-  }
-  .Afrikaans {
-    margin: 5%;
-  }
-  .english {
-    margin: 5%;
-  }
-  .isixhosa {
-    margin: 5%;
   }
   .counter {
     margin-left: 20%;
