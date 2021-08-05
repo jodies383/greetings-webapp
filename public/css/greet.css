@@ -1,58 +1,52 @@
 body {
-  background-color: lavender;
-  font-family: 'Amatic SC', cursive;
+  background: linear-gradient(90deg, hsla(18, 76%, 85%, 1) 0%, hsla(203, 69%, 84%, 1) 100%);
+  font-family: 'Poiret One', cursive;
   font-size: 170%;
 }
 
 .enter {
-  border-style: solid;
-  border-width: 10px;
-  border-color: lightsteelblue;
+  color: rgb(199, 156, 137);
   text-align: center;
+  font-size: 140%;
 }
 
 .greetDiv {
-  margin-left: 20%;
+  width: 380px;
+  min-height: 100%;
+  margin: auto;
+  overflow: hidden;
+  width: 75%;
   display: flex;
   flex-direction: column;
-  width: 50%;
+  text-align: center;
 }
 
-.warningName {
-  font-size: 85%;
-  color: red;
-  font-weight: bold;
-}
-
-.warningLang {
-  font-size: 85%;
-  color: red;
-  font-weight: bold;
-}
-
-.warningBoth, .validName {
-  font-size: 85%;
-  color: red;
+.warning {
+  font-size: 80%;
+  color: #e66962;
   font-weight: bold;
 }
 
 .myGreet {
+  color: rgb(112, 116, 161);
   text-align: center;
   font-size: 180%;
 }
 
-.myCount {
+.count {
+  color: rgb(175, 133, 115);
   font-size: 130%;
 }
 
 .radioBtns {
+  margin-top: 2%;
   display: inline-block;
 }
 
 .greet {
-  background-color: white;
-  color: black;
+  background-color: rgb(189, 184, 184);
   border: 2px solid rgb(189, 184, 184);
+  color: rgb(26, 24, 24);
   padding: 10px 24px;
   text-align: center;
   text-decoration: none;
@@ -60,12 +54,14 @@ body {
   font-size: 16px;
   transition-duration: 0.4s;
   cursor: pointer;
+  border-radius: 0.5em;
+  margin-top: 2%;
 }
 
 .Reset {
-  background-color: white;
-  color: black;
+  background-color: rgb(189, 184, 184);
   border: 2px solid rgb(189, 184, 184);
+  color: rgb(26, 24, 24);
   padding: 8px 20px;
   text-align: center;
   text-decoration: none;
@@ -73,22 +69,24 @@ body {
   font-size: 16px;
   transition-duration: 0.4s;
   cursor: pointer;
+  border-radius: 0.5em;
 }
 
 .Reset:hover {
-  background-color: rgb(189, 184, 184);
+  background-color: rgb(243, 190, 167);
+  border: 2px solid rgb(243, 190, 167);
   color: white;
 }
 
 .greet:hover {
-  background-color: rgb(189, 184, 184);
+  background-color: rgb(243, 190, 167);
+  border: 2px solid rgb(243, 190, 167);
   color: white;
 }
 
 input[type=text], select {
-  width: 100%;
+  width: 80%;
   padding: 12px 20px;
-  margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -96,10 +94,7 @@ input[type=text], select {
 }
 
 .counter {
-  float: right;
   text-align: center;
-  margin-left: 79%;
-  
 }
 
 @media (min-width:800px) {
@@ -134,7 +129,7 @@ input[type=text], select {
     display: flex;
     flex-direction: column;
   }
-  .greetDiv{
+  .greetDiv {
     margin-left: 20%;
     display: flex;
     flex-direction: column;

@@ -5,8 +5,9 @@
     <link rel="stylesheet" href="greet.css">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -14,68 +15,65 @@
 
 <body>
     <div class="greetDiv">
-        <div class="enter">
-            <h1>
-                Greeting
-            </h1>
-            <p><i>Enter your name and select a language to recieve a greeting</i></p>
+        <div class="head">
+            <div class="enter">
+                <h1>
+                    Greetings
+                </h1>
+            </div>
+            <p><i>Enter your name and select a language to recieve a greeting...</i></p>
         </div>
-{{!-- <form action="/" method="POST"> --}}
-        <span class="{{greetMessage}}">{{greetMessage}}</span>
-{{!-- </form> --}}
+
+        <div class="myGreet">
+            <span class="{{greetMessage}}">{{greetMessage}}</span>
+        </div>
+
+        <div class="warning">
+            <span class="{{warningName}}">{{warningName}}</span>
+        </div>
+
         <div>
-            <div>
-                <span class="{{warningName}}">{{warningName}}</span>
-            </div>
-            <div>
-                <span class="warningLang"></span>
-                <div>
-                    <span class="warningBoth"></span>
+
+            <form action="/greet" method="POST">
+                <input type="text" name="enterName" value="{{greet.enterName}}" placeholder="enter your name..."
+                    class="greetMe">
+
+                <div class="radioBtns">
+                    <label class="english">
+                        <input type="radio" name="languages" class="langRadio" value="English">
+                        <span class="label-body">English</span>
+                    </label>
+                    <label class="Afrikaans">
+                        <input type="radio" name="languages" class="langRadio" value="Afrikaans">
+                        <span class="label-body">Afrikaans</span>
+                    </label>
+                    <label class="isixhosa">
+                        <input type="radio" name="languages" class="langRadio" value="isiXhosa">
+                        <span class="label-body">isiXhosa</span>
+                    </label>
+                </div>
+                <div class="theBtns">
+                    <button class="button-primary greet" type="submit" name="button">Greet Me</button>
+
+                </div>
+            </form>
+
+
+
+
+            <div class="counter">
+                <div class="countlabel">
+                    <p>Greet Counter:</p>
+                </div>
+                <div class="count">
+                    <span class="{{myCount}}">{{myCount}}</span>
                 </div>
                 <div>
-                    <span class="validName"></span>
+                    <button onClick="window.location.reload();" class="button-primary Reset" type="button"
+                        name="button">Reset</button>
                 </div>
             </div>
         </div>
-        <form action="/greet" method="POST">
-            <input type="text" name="enterName" value="{{greet.enterName}}" placeholder="enter your name..." class="greetMe">
-
-            <div class="radioBtns">
-                <label class="english">
-                    <input type="radio" name="languages" class="langRadio" value="English">
-                    <span class="label-body">English</span>
-                </label>
-                <label class="Afrikaans">
-                    <input type="radio" name="languages" class="langRadio" value="Afrikaans">
-                    <span class="label-body">Afrikaans</span>
-                </label>
-                <label class="isixhosa">
-                    <input type="radio" name="languages" class="langRadio" value="isiXhosa">
-                    <span class="label-body">isiXhosa</span>
-                </label>
-            </div>
-            <div class="theBtns">
-                <button class="button-primary greet" type="submit" name="button">Greet Me!</button>
-
-            </div>
-        </form>
-
-
-
-
-        <div class="counter">
-            <div class="countlabel">
-                <p>Greet Counter:</p>
-            </div>
-            <div>
-                <span class="myCount"></span>
-            </div>
-            <div>
-                <button onClick="window.location.reload();" class="button-primary Reset" type="button"
-                    name="button">Reset</button>
-            </div>
-        </div>
-    </div>
 </body>
 
 

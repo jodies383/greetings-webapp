@@ -20,17 +20,16 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-let message = ""
 let warnings = ""
 
 app.get('/', function (req, res) {
 
     res.render('index', {
 
-        greetMessage: message,
-        warningName: warnings
+        greetMessage: greetings.returnMessage(),
+        warningName: greetings.returnWarn,
+        myCount: greetings.theCount()
     });
-    console.log(message);
 });
 
 app.post('/greet', function (req, res) {
@@ -40,25 +39,9 @@ app.post('/greet', function (req, res) {
     });
 
     greetings.getName(),
-
-        greetings.greetMe(req.body.languages)
-    if (req.body.languages === "English") {
-        message = "Hello " + greetings.getName()
-    } else if (req.body.languages === "Afrikaans") {
-        message = "Goeie More " + greetings.getName()
-    }
-    else if (req.body.languages === "isiXhosa") {
-        message = "Molo " + greetings.getName()
-    }
-    // else if (greetings.getName() === "" && !req.body.languages) {
-    //     message = "Please enter your name and select a language"
-
-    // }
-    // else if (greetings.getName() === "" && req.body.languages) {
-    //     message = "Please enter your name"
-    // } else if (!req.body.languages) {
-    //     message = "Please select a language"
-    // }
+        greetings.greetMe(req.body.languages),
+        greetings.addNames(req.body.languages),
+        greetings.warnMessage(req.body.languages) 
     res.redirect('/');
 
 });
