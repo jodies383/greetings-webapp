@@ -13,25 +13,11 @@
 </head>
 
 <body>
-
-</body>
-
-</html>
-<div class="row">
-    <h1>Greeted Names</h1>
-
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Language</th>
-            <th>When</th>
-        </tr>
-        {{#each actions}}
-        <tr>
-            <td>{{cost}}</td>
-            <td>{{type}}</td>
-            <td>{{newTime}}</td>
-        </tr>
+     <a href="/"><p>Home</p></a>
+    <a href="/greeted"><p>Back</p></a>
+    <div class="countName">
+        {{#each greeted}}
+        <p>Hello, {{theName}} has been greeted {{number}} times</p>
         {{/each}}
-    </table>
-</div>
+    </div>
+</body>

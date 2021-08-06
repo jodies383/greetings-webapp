@@ -58,23 +58,29 @@ app.post('/greet', function (req, res) {
     res.redirect('/');
 
 });
-app.post('/action', function (req, res) {
+app.post('/greeted', function (req, res) {
     greetings.greetMe(req.body.languages)
     res.redirect('/');
 });
 
-app.get('/actions', function (req, res) {
+app.get('/greeted', function (req, res) {
     var newAction = greetings.actions();
     newAction.forEach(element => {
         element.newTime = moment(element.timestamp).fromNow()
     });
 
-    res.render('actions', { actions: newAction });
+    res.render('greeted', { actions: newAction });
 
 });
-app.get('/actions/:actiontype', function (req, res) {
+app.get('/greeted/:actiontype', function (req, res) {
     const actionType = req.params.actiontype;
-    res.render('actions', { actions: greetings.actionsFor(actionType) });
+    res.render('greeted', { actions: greetings.actionsFor(actionType) });
+
+});
+
+app.get('/counter', function (req, res) {
+    var countIn = greetings.counted();
+    res.render('counter', { greeted: countIn });
 
 });
 const PORT = process.env.PORT || 3011;

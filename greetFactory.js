@@ -4,7 +4,7 @@ module.exports = function theGreet(existingNames) {
     let theMessage;
 
     let actionList = [];
-
+    let countList = [];
 
     var namesGreeted = existingNames || []
 
@@ -50,15 +50,26 @@ module.exports = function theGreet(existingNames) {
 
         } else theMessage = ("");
 
-        actionList.push({
-            type: action,
-            namesGreeted,
-            timestamp: new Date()
+        if (theName && action) {
+            actionList.push({
+                type: action,
+                theName,
+                timestamp: new Date()
 
+
+            });
+        }
+        countList.push({
+            number: theName.length,
+            theName,
         });
     }
     function actions() {
         return actionList;
+    }
+
+    function counted(){
+        return countList;
     }
 
     function actionsFor(type) {
@@ -120,6 +131,7 @@ module.exports = function theGreet(existingNames) {
         returnMessage,
         warnLang,
         returnWarn,
+        counted,
         actions,
         actionsFor
 
