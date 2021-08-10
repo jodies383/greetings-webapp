@@ -2,6 +2,7 @@ module.exports = function theGreet(existingNames) {
 
     let theName;
     let theMessage;
+    let counter = 0;
 
     let actionList = [];
     let countList = [];
@@ -55,13 +56,12 @@ module.exports = function theGreet(existingNames) {
                 type: action,
                 theName,
                 timestamp: new Date()
-
-
             });
+            counter ++
         }
         countList.push({
-            number: theName.length,
             theName,
+            number: counter.length
         });
     }
     function actions() {

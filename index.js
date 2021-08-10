@@ -72,15 +72,20 @@ app.get('/greeted', function (req, res) {
     res.render('greeted', { actions: newAction });
 
 });
-app.get('/greeted/:actiontype', function (req, res) {
+app.get('/greeted', function (req, res) {
     const actionType = req.params.actiontype;
     res.render('greeted', { actions: greetings.actionsFor(actionType) });
 
 });
 
-app.get('/counter', function (req, res) {
+app.get('/counter/:actiontype', function (req, res) {
     var countIn = greetings.counted();
     res.render('counter', { greeted: countIn });
+});
+
+app.get('/counter/:actiontype', function (req, res) {
+    const actionType = req.params.actiontype;
+    res.render('counter', { greeted: greetings.actionsFor(actionType)});
 
 });
 const PORT = process.env.PORT || 3011;
