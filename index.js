@@ -41,51 +41,38 @@ app.get('/', function (req, res) {
 });
 
 app.post('/greet', function (req, res) {
-    greetings.setName({
-        theName: req.body.enterName,
-    });
+    greetings.addNames(req.body.enterName)
+    greetings.greetMe(req.body.enterName, req.body.languages)
+    greetings.getNames()
 
-    greetings.getName(),
-        greetings.greetMe(req.body.languages),
-        greetings.addNames(req.body.languages)
-    if (greetings.noName(req.body.languages)) {
-        req.flash('info', 'Please enter your name and select a language');
-    } else if (greetings.removeValidName(req.body.languages)) {
-        req.flash('info', 'Please enter a valid name');
-    } else if (greetings.warnLang(req.body.languages)) {
-        req.flash('info', 'Please select a language');
-    }
+    // if (greetings.noName(req.body.languages)) {
+    //     req.flash('info', 'Please enter your name and select a language');
+    // } else if (greetings.removeValidName(req.body.languages)) {
+    //     req.flash('info', 'Please enter a valid name');
+    // } else if (greetings.warnLang(req.body.languages)) {
+    //     req.flash('info', 'Please select a language');
+    // }
     res.redirect('/');
 
 });
-app.post('/greeted', function (req, res) {
-    greetings.greetMe(req.body.languages)
-    res.redirect('/');
-});
-
 app.get('/greeted', function (req, res) {
-    var newAction = greetings.actions();
-    newAction.forEach(element => {
-        element.newTime = moment(element.timestamp).fromNow()
+    let namesList = greetings.getNames()
+    res.render('greeted', {
+        namesList: namesList
     });
-
-    res.render('greeted', { actions: newAction });
-
-});
-app.get('/greeted', function (req, res) {
-    const actionType = req.params.actiontype;
-    res.render('greeted', { actions: greetings.actionsFor(actionType) });
-
 });
 
-app.get('/counter/:actiontype', function (req, res) {
-    var countIn = greetings.counted();
-    res.render('counter', { greeted: countIn });
-});
 
-app.get('/counter/:actiontype', function (req, res) {
-    const actionType = req.params.actiontype;
-    res.render('counter', { greeted: greetings.actionsFor(actionType)});
+app.get('/counter/:username', function (req, res) {
+    const users = req.params.username
+    let namesList = greetings.getNames()
+    let theCounter = namesList[users]
+    // console.log(namesList);
+
+    res.render('counter', {
+        name: users,
+        counter: theCounter
+    });
 
 });
 const PORT = process.env.PORT || 3011;

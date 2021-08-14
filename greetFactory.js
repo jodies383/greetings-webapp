@@ -1,109 +1,63 @@
 module.exports = function theGreet(existingNames) {
 
-    let theName;
     let theMessage;
-    let counter = 0;
 
     let actionList = [];
-    let countList = [];
 
-    var namesGreeted = existingNames || []
+    var namesGreeted = existingNames || {}
 
     var regex = /^[a-zA-Z]+$/;
 
-    function addNames(checkedRadioBtn) {
+    function addNames(name) {
 
-        if (!namesGreeted.includes(theName.toUpperCase()) && regex.test(theName.toUpperCase()) && checkedRadioBtn) {
-            namesGreeted.push(theName.toUpperCase())
+        if (namesGreeted[name.toUpperCase()] === undefined) {
+            namesGreeted[name.toUpperCase()] = 1
+        } else {
+            namesGreeted[name.toUpperCase()]++
         }
 
     }
-    function returnNames() {
+    function getNames() {
         return namesGreeted;
     }
 
     function theCount() {
-        return namesGreeted.length;
+        var namesList = Object.keys(namesGreeted)
+        return namesList.length;
     }
 
-    function setName(name) {
-        theName = name.theName;
-
-    }
-    function getName() {
-        return theName;
-    }
-    function greetMe(action) {
+    function greetMe(name, language) {
 
 
-        if (action === "English" && regex.test(theName.toUpperCase())) {
+        if (language === "English" && regex.test(name.toUpperCase())) {
 
-            theMessage = ("Hello, " + theName)
+            theMessage = "HELLO, " + name.toUpperCase()
         }
-        else if (action === "Swedish" && regex.test(theName.toUpperCase())) {
+        else if (language === "Swedish" && regex.test(name.toUpperCase())) {
 
-            theMessage = ("Hallå, " + theName)
+            theMessage = "HALLÅ, " + name.toUpperCase()
         }
-        else if (action === "Dutch" && regex.test(theName.toUpperCase())) {
+        else if (language === "Dutch" && regex.test(name.toUpperCase())) {
 
-            theMessage = ("Hallo, " + theName)
+            theMessage = "HALLO, " + name.toUpperCase()
 
 
-        } else theMessage = ("");
-
-        if (theName && action) {
-            actionList.push({
-                type: action,
-                theName,
-                timestamp: new Date()
-            });
-            counter ++
         }
-        countList.push({
-            theName,
-            number: counter.length
-        });
+
+
     }
+
     function actions() {
         return actionList;
     }
 
-    function counted(){
-        return countList;
-    }
-
-    function actionsFor(type) {
-        const filteredActions = [];
-
-        for (let index = 0; index < actionList.length; index++) {
-            const action = actionList[index];
-            if (action.type === type) {
-                filteredActions.push(action);
-            }
-        }
-
-        return filteredActions;
-
-    }
+   
     function returnMessage() {
         return theMessage;
     }
 
 
-    function returnWarn() {
-        return warnings;
-    }
-    function removeValidName() {
-
-        if (regex.test(theName)) {
-            return ("");
-
-        }
-        else {
-            return ("Please enter a name");
-        }
-    }
-    function noName(checkedRadioBtn) {
+     function noName(checkedRadioBtn) {
 
         if ((!theName && !checkedRadioBtn)) {
 
@@ -112,31 +66,14 @@ module.exports = function theGreet(existingNames) {
         } else return ("")
     }
 
-    function warnLang(checkedRadioBtn) {
-        if (regex.test(theName) && !checkedRadioBtn) {
-            return ("Please select a language");
-        } else return ("")
-
-    }
-
     return {
         addNames,
         theCount,
-        setName,
-        getName,
-        returnNames,
+        getNames,
         greetMe,
-        removeValidName,
         noName,
         returnMessage,
-        warnLang,
-        returnWarn,
-        counted,
-        actions,
-        actionsFor
-
-
-
+        actions
     }
 
 
