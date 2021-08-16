@@ -2,20 +2,19 @@ module.exports = function theGreet(existingNames) {
 
     let theMessage;
 
-    let actionList = [];
-
     var namesGreeted = existingNames || {}
 
     var regex = /^[a-zA-Z]+$/;
 
     function addNames(name) {
+        if (regex.test(name)) {
 
-        if (namesGreeted[name.toUpperCase()] === undefined) {
-            namesGreeted[name.toUpperCase()] = 1
-        } else {
-            namesGreeted[name.toUpperCase()]++
+            if (namesGreeted[name.toUpperCase()] === undefined) {
+                namesGreeted[name.toUpperCase()] = 1
+            } else {
+                namesGreeted[name.toUpperCase()]++
+            }
         }
-
     }
     function getNames() {
         return namesGreeted;
@@ -47,23 +46,21 @@ module.exports = function theGreet(existingNames) {
 
     }
 
-    function actions() {
-        return actionList;
-    }
-
-   
     function returnMessage() {
         return theMessage;
     }
 
 
-     function noName(checkedRadioBtn) {
+    function removeValidName(param1) {
 
-        if ((!theName && !checkedRadioBtn)) {
+        if (param1 && regex.test(param1)) {
+            return ("");
 
-            return ("Please enter your name and select a language");
+        }
 
-        } else return ("")
+        else {
+            return ("Please enter a valid name");
+        }
     }
 
     return {
@@ -71,9 +68,8 @@ module.exports = function theGreet(existingNames) {
         theCount,
         getNames,
         greetMe,
-        noName,
-        returnMessage,
-        actions
+        removeValidName,
+        returnMessage
     }
 
 

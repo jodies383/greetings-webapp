@@ -118,6 +118,9 @@ td {
   text-align: center;
   font-size: 200%;
 }
+.name, .counter{
+  color: rgb(112, 116, 161);
+}
 
 @media (min-width:800px) {
   .greetDiv {

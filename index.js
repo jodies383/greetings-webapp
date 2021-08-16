@@ -45,13 +45,9 @@ app.post('/greet', function (req, res) {
     greetings.greetMe(req.body.enterName, req.body.languages)
     greetings.getNames()
 
-    // if (greetings.noName(req.body.languages)) {
-    //     req.flash('info', 'Please enter your name and select a language');
-    // } else if (greetings.removeValidName(req.body.languages)) {
-    //     req.flash('info', 'Please enter a valid name');
-    // } else if (greetings.warnLang(req.body.languages)) {
-    //     req.flash('info', 'Please select a language');
-    // }
+    if (greetings.removeValidName(req.body.languages)) {
+        req.flash('info', 'Please enter a valid name');
+    }
     res.redirect('/');
 
 });
@@ -67,7 +63,6 @@ app.get('/counter/:username', function (req, res) {
     const users = req.params.username
     let namesList = greetings.getNames()
     let theCounter = namesList[users]
-    // console.log(namesList);
 
     res.render('counter', {
         name: users,
