@@ -1,7 +1,7 @@
 const assert = require('assert');
 const greet = require('../greetFactory');
 
-describe('settings-bill', function () {
+describe('Greetings', function () {
 
     const greeting = greet();
 
@@ -24,11 +24,20 @@ describe('settings-bill', function () {
     });
     describe('Storing Names', function () {
 
-        it('should return the list of names that have been greeted', function () {
+        it('should return the list of names and times the names have been greeted', function () {
             greeting.addNames("Jodie", "English");
             greeting.addNames("Paul", "Swedish");
             greeting.addNames("Amy", "Dutch");
             assert.deepEqual({ JODIE: 1, PAUL: 1, AMY: 1 }, greeting.getNames());
+        });
+        it('should return the list of names and times the names have been greeted', function () {
+            greeting.addNames("Jodie", "English");
+            greeting.addNames("Jodie", "Dutch");
+            greeting.addNames("Jodie", "Swedish");
+            greeting.addNames("Paul", "Swedish");
+            greeting.addNames("Paul", "Swedish");
+            greeting.addNames("Amy", "Dutch");
+            assert.deepEqual({ JODIE: 4, PAUL: 3, AMY: 2}, greeting.getNames());
         });
     });
     describe('Counter', function () {
@@ -55,6 +64,16 @@ describe('settings-bill', function () {
 
         it('should return the message "Please enter a valid name"', function () {
             greeting.addNames("123", "English");
+
+            assert.equal("Please enter a valid name", greeting.removeValidName());
+        });
+        it('should return the message "Please enter a valid name"', function () {
+            greeting.addNames("", "Dutch");
+
+            assert.equal("Please enter a valid name", greeting.removeValidName());
+        });
+        it('should return the message "Please enter a valid name"', function () {
+            greeting.addNames("!@#$%^", "Swedish");
 
             assert.equal("Please enter a valid name", greeting.removeValidName());
         });
