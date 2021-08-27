@@ -1,8 +1,10 @@
-module.exports = function theGreet(existingNames) {
+// const { Pool } = require("pg");
+
+module.exports = function(pool) {
 
     let theMessage;
 
-    var namesGreeted = existingNames || {}
+    var namesGreeted = pool || {}
 
     var regex = /^[a-zA-Z]+$/;
 
@@ -16,8 +18,9 @@ module.exports = function theGreet(existingNames) {
             }
         }
     }
-    function getNames() {
-        return namesGreeted;
+    async function getNames() {
+        const result = await pool.query ('select * from users')
+        return result.rows;
     }
 
     function theCount() {

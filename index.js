@@ -1,5 +1,7 @@
 var moment = require('moment');
 moment().format();
+const pg = require("pg");
+const Pool = pg.Pool;
 const express = require('express');
 const flash = require('express-flash');
 const session = require('express-session');
@@ -12,9 +14,10 @@ const handlebarSetup = exphbs({
 
 const bodyParser = require('body-parser');
 const theGreet = require('./greetFactory');
+const greetFactory = require('./greetFactory');
 const app = express();
 
-const greetings = theGreet();
+// const greetings = theGreet();
 
 
 app.engine('handlebars', handlebarSetup);
@@ -31,6 +34,19 @@ app.use(session({
 }));
 app.use(flash());
 
+const connectionString = process.env.DATABASE_URL;
+
+const pool = new Pool({
+    connectionString,
+    user: 'codex',
+    host: connectionString,
+    database: 'users',
+    password: 'pg123',
+    port: 3011,
+});
+
+const greetings = greetFactory(pool)
+
 app.get('/', function (req, res) {
 
     res.render('index', {
@@ -40,21 +56,25 @@ app.get('/', function (req, res) {
     });
 });
 
-app.post('/greet', function (req, res) {
+app.post('/greet', function(req, res) {
+
     greetings.addNames(req.body.enterName)
     greetings.greetMe(req.body.enterName, req.body.languages)
-    greetings.getNames()
 
+    // const add = await greetings.getNames()
+    // console.log(add);
+    
     if (greetings.removeValidName(req.body.languages)) {
         req.flash('info', 'Please enter a valid name');
     }
     res.redirect('/');
 
 });
-app.get('/greeted', function (req, res) {
-    let namesList = greetings.getNames()
+
+app.get('/greeted', async function (req, res) {
+    let namesL = await greetings.getNames()
     res.render('greeted', {
-        namesList: namesList
+        namesList: namesL
     });
 });
 
