@@ -18,8 +18,9 @@ module.exports = function(pool) {
             }
         }
     }
+    
     async function getNames() {
-        const result = await pool.query ('select * from users')
+        const result = await pool.query ('select username from users')
         return result.rows;
     }
 

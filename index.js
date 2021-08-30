@@ -34,9 +34,9 @@ app.use(session({
 }));
 app.use(flash());
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
 
-const pool = new Pool({
+const dbpool = new Pool({
     connectionString,
     user: 'codex',
     host: connectionString,
@@ -45,7 +45,7 @@ const pool = new Pool({
     port: 3011,
 });
 
-const greetings = greetFactory(pool)
+const greetings = greetFactory(dbpool)
 
 app.get('/', function (req, res) {
 
@@ -58,8 +58,8 @@ app.get('/', function (req, res) {
 
 app.post('/greet', function(req, res) {
 
-    greetings.addNames(req.body.enterName)
-    greetings.greetMe(req.body.enterName, req.body.languages)
+    greetings.addNames(req.body.enterName);
+    greetings.greetMe(req.body.enterName, req.body.languages);
 
     // const add = await greetings.getNames()
     // console.log(add);
@@ -72,7 +72,8 @@ app.post('/greet', function(req, res) {
 });
 
 app.get('/greeted', async function (req, res) {
-    let namesL = await greetings.getNames()
+    let namesL = await greetings.getNames();
+
     res.render('greeted', {
         namesList: namesL
     });
@@ -90,6 +91,7 @@ app.get('/counter/:username', function (req, res) {
     });
 
 });
+
 const PORT = process.env.PORT || 3011;
 
 app.listen(PORT, function () {
