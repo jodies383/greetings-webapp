@@ -51,6 +51,12 @@ const dbpool = new Pool({
 //         console.log(namesGreeted.rows);
 //     })
 
+
+function errorHandler(err, req, res, next) {
+    res.status(500);
+    res.render('error', { error: err });
+  }
+
 const greetings = greetFactory(dbpool)
 
 app.get('/', function (req, res) {
@@ -77,11 +83,11 @@ app.post('/greet', function (req, res) {
 
 });
 
-app.get('/greeted', function (req, res) {
-
+app.get('/greeted', async function (req, res) {
+    let namesL = await greetings.getNames();
 
     res.render('greeted', {
-        namesList: greetings.getNames()
+        namesList: namesL
     });
 });
 
@@ -102,6 +108,8 @@ app.post('/reset', function (req, res) {
     greetings.resetButton()
     res.render('index')
 })
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3011;
 
