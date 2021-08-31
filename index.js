@@ -54,27 +54,37 @@ const dbpool = new Pool({
 
 const greetings = greetFactory(dbpool)
 
-app.get('/', function (req, res) {
+app.get('/', function (req, res, next) {
+    try {
+        res.render('index', {
 
-    res.render('index', {
+            greetMessage: greetings.returnMessage(),
+            myCount: greetings.theCount()
+        }); 
+    } catch (error) {
+        next(error)
+    }
 
-        greetMessage: greetings.returnMessage(),
-        myCount: greetings.theCount()
-    });
+   
 });
 
-app.post('/greet', function (req, res) {
-
-    greetings.addNames(req.body.enterName);
-    greetings.greetMe(req.body.enterName, req.body.languages);
-
-    // const add = await greetings.getNames()
-    // console.log(add);
-
-    if (greetings.removeValidName(req.body.languages)) {
-        req.flash('info', 'Please enter a valid name');
+app.post('/greet', function (req, res, next) {
+    try {
+        greetings.addNames(req.body.enterName);
+        greetings.greetMe(req.body.enterName, req.body.languages);
+    
+        // const add = await greetings.getNames()
+        // console.log(add);
+    
+        if (greetings.removeValidName(req.body.languages)) {
+            req.flash('info', 'Please enter a valid name');
+        }
+        res.redirect('/');
+    } catch (error) {
+        next(error)
     }
-    res.redirect('/');
+
+
 
 });
 
@@ -87,28 +97,37 @@ app.get('/greeted', async function (req, res, next) {
         });
         
     } catch (error) {
-        next(err)
+        next(error)
     }
 
 });
 
 
-app.get('/counter/:username', function (req, res) {
-    const users = req.params.username
-    let namesList = greetings.getNames()
-    let theCounter = greetings.theCount()
-
-    res.render('counter', {
-        name: users,
-        counter: theCounter
-    });
+app.get('/counter/:username', function (req, res, next) {
+    try {
+        const users = req.params.username
+        let namesList = greetings.getNames()
+        let theCounter = greetings.theCount()
+    
+        res.render('counter', {
+            name: users,
+            counter: theCounter
+        });
+    } catch (error) {
+        next(error)
+    }
+  
 
 });
 
-app.post('/reset', function (req, res) {
-    greetings.resetButton()
-    res.render('index')
-})
+app.post('/reset', function (req, res, next) {
+    try {
+        greetings.resetButton()
+        res.render('index')
+    } catch (error) {
+        next(error)
+    }
+});
 
 const PORT = process.env.PORT || 3011;
 
