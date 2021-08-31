@@ -88,9 +88,9 @@ app.post('/greet', function (req, res, next) {
 
 });
 
-app.get('/greeted', async function (req, res, next) {
+app.get('/greeted', function (req, res, next) {
     try {
-        let namesL = await greetings.getNames();
+        let namesL = greetings.getNames();
 
         res.render('greeted', {
             namesList: namesL
