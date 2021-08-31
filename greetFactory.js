@@ -23,25 +23,10 @@ module.exports = function (pool) {
 
     }
 
-
-
     async function getNames() {
         const result = await pool.query('select * from users')
         return result.rows;
     }
-
-    async function show(req, res, next) {
-		try {
-			let results = await productService.all(); 
-			res.render('products/home', {
-				no_products: results.length === 0,
-				products: results,
-			});
-		}
-		catch (err) {
-			next(err);
-		}
-	};
 
     async function theCount() {
         const countRes = pool.query('select count(*) from users')
