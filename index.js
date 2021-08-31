@@ -77,11 +77,11 @@ app.post('/greet', function (req, res) {
 
 });
 
-app.get('/greeted', async function (req, res) {
-    let namesL = await greetings.getNames();
+app.get('/greeted', function (req, res) {
+
 
     res.render('greeted', {
-        namesList: namesL
+        namesList: greetings.getNames()
     });
 });
 
