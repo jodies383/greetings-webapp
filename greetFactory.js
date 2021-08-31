@@ -1,34 +1,50 @@
-// const { Pool } = require("pg");
-
-module.exports = function(pool) {
+module.exports = function (pool) {
 
     let theMessage;
 
-    var namesGreeted = pool || {}
+    var namesGreeted = {}
 
     var regex = /^[a-zA-Z]+$/;
 
-    function addNames(name) {
+
+    async function addNames(name) {
+
         if (regex.test(name)) {
 
             if (namesGreeted[name.toUpperCase()] === undefined) {
-                namesGreeted[name.toUpperCase()] = 1
+                namesGreeted[name.toUpperCase()] = 1,
+                    await pool.query('insert into users (username) values ($1)', [name]);
+
             } else {
                 namesGreeted[name.toUpperCase()]++
             }
         }
+
+
     }
-    
+
+
+
     async function getNames() {
-        const result = await pool.query ('select username from users')
+        const result = await pool.query('select username from users')
         return result.rows;
     }
 
-    function theCount() {
-        var namesList = Object.keys(namesGreeted)
-        return namesList.length;
+    async function theCount() {
+        const countRes = pool.query('select count(*) from users')
+        const newCount = countRes.then(function (value) {
+            console.log(value.rows);
+            const newVal = value.rows[0].count
+            return JSON.stringify(newVal);
+
+        });
+
+        return newCount;
+
     }
 
+    // var namesList = Object.keys(namesGreeted)
+    // return namesList.length;
     function greetMe(name, language) {
 
 
@@ -67,13 +83,18 @@ module.exports = function(pool) {
         }
     }
 
+    async function resetButton() {
+        await pool.query('delete from users')
+    }
+
     return {
         addNames,
         theCount,
         getNames,
         greetMe,
         removeValidName,
-        returnMessage
+        returnMessage,
+        resetButton
     }
 
 

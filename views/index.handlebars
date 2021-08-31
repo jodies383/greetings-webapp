@@ -66,22 +66,24 @@
 
 
 
-
-            <div class="counter">
-                <div class="countlabel">
-                    <a href="/greeted">
-                        <p>Greeted Names</p>
-                    </a>
+            <form action="/reset" method="POST">
+                <div class="counter">
+                    <div class="countlabel">
+                        <a href="/greeted">
+                            <p>Greeted Names</p>
+                        </a>
+                    </div>
+                    <div class="count">
+                        <span class="{{myCount}}">{{myCount}}</span>
+                    </div>
+                    <div>
+                        <button onClick="window.location.reload();" class="button-primary Reset" type="submit"
+                            name="button">Reset</button>
+                    </div>
                 </div>
-                <div class="count">
-                    <span class="{{myCount}}">{{myCount}}</span>
-                </div>
-                <div>
-                    <button onClick="window.location.reload();" class="button-primary Reset" type="button"
-                        name="button">Reset</button>
-                </div>
-            </div>
+            </form>
         </div>
+
 </body>
 
 

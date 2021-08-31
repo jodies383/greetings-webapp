@@ -45,6 +45,12 @@ const dbpool = new Pool({
     port: 3011,
 });
 
+// dbpool
+//     .query('select * from users')
+//     .then(function (namesGreeted) {
+//         console.log(namesGreeted.rows);
+//     })
+
 const greetings = greetFactory(dbpool)
 
 app.get('/', function (req, res) {
@@ -56,14 +62,14 @@ app.get('/', function (req, res) {
     });
 });
 
-app.post('/greet', function(req, res) {
+app.post('/greet', function (req, res) {
 
     greetings.addNames(req.body.enterName);
     greetings.greetMe(req.body.enterName, req.body.languages);
 
     // const add = await greetings.getNames()
     // console.log(add);
-    
+
     if (greetings.removeValidName(req.body.languages)) {
         req.flash('info', 'Please enter a valid name');
     }
@@ -83,7 +89,7 @@ app.get('/greeted', async function (req, res) {
 app.get('/counter/:username', function (req, res) {
     const users = req.params.username
     let namesList = greetings.getNames()
-    let theCounter = namesList[users]
+    let theCounter = greetings.theCount()
 
     res.render('counter', {
         name: users,
@@ -91,6 +97,11 @@ app.get('/counter/:username', function (req, res) {
     });
 
 });
+
+app.post('/reset', function (req, res) {
+    greetings.resetButton()
+    res.render('index')
+})
 
 const PORT = process.env.PORT || 3011;
 
