@@ -123,7 +123,7 @@ app.get('/counter/:username', function (req, res, next) {
 app.post('/reset', function (req, res, next) {
     try {
         greetings.resetButton()
-        res.render('index')
+        res.redirect('/')
     } catch (error) {
         next(error)
     }
