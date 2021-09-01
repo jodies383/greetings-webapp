@@ -54,12 +54,13 @@ const dbpool = new Pool({
 
 const greetings = greetFactory(dbpool)
 
-app.get('/', function (req, res, next) {
+app.get('/', async function (req, res, next) {
+    const counted = await greetings.theCount()
     try {
         res.render('index', {
 
             greetMessage: greetings.returnMessage(),
-            myCount: greetings.theCount()
+            myCount: counted
         }); 
     } catch (error) {
         next(error)

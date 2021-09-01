@@ -28,12 +28,13 @@ module.exports = function (pool) {
         return result.rows;
     }
 
+
     async function theCount() {
         const countRes = pool.query('select count(*) from users')
         const newCount = countRes.then(function (value) {
             console.log(value.rows);
             const newVal = value.rows[0].count
-            return JSON.stringify(newVal);
+            return newVal;
 
         });
 
