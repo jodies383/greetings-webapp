@@ -55,28 +55,28 @@ const dbpool = new Pool({
 const greetings = greetFactory(dbpool)
 
 app.get('/', async function (req, res, next) {
-    const counted = await greetings.theCount()
     try {
-        res.render('index', {
+        const counted = await greetings.theCount()
 
+        res.render('index', {
             greetMessage: greetings.returnMessage(),
             myCount: counted
-        }); 
+        });
     } catch (error) {
         next(error)
     }
 
-   
+
 });
 
-app.post('/greet', function (req, res, next) {
+app.post('/greet', async function (req, res, next) {
+
     try {
         greetings.addNames(req.body.enterName);
         greetings.greetMe(req.body.enterName, req.body.languages);
-    
         // const add = await greetings.getNames()
         // console.log(add);
-    
+
         if (greetings.removeValidName(req.body.languages)) {
             req.flash('info', 'Please enter a valid name');
         }
@@ -96,7 +96,7 @@ app.get('/greeted', async function (req, res, next) {
         res.render('greeted', {
             namesList: namesL
         });
-        
+
     } catch (error) {
         next(error)
     }
@@ -104,20 +104,22 @@ app.get('/greeted', async function (req, res, next) {
 });
 
 
-app.get('/counter/:username', function (req, res, next) {
+app.get('/counter/:username', async function (req, res, next) {
     try {
         const users = req.params.username
-        let namesList = greetings.getNames()
-        let theCounter = greetings.theCount()
-    
+        // let namesList = greetings.getNames()
+        const counted = await greetings.theCount()
+
+        // let theCounter = greetings.theCount()
+
         res.render('counter', {
             name: users,
-            counter: theCounter
+            counter: counted
         });
     } catch (error) {
         next(error)
     }
-  
+
 
 });
 
