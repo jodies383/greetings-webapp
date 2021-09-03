@@ -8,20 +8,30 @@ module.exports = function (pool) {
 
 
     async function addNames(name) {
+        var checkname = await pool.query(`SELECT username from users WHERE username = $1`, [name]);
 
-        if (regex.test(name)) {
-
-            if (namesGreeted[name.toUpperCase()] === undefined) {
-                namesGreeted[name.toUpperCase()] = 1,
-                    await pool.query('insert into users (username) values ($1)', [name]);
-
-            } else {
-                namesGreeted[name.toUpperCase()]++
-            }
+        if (checkname.rowCount < 1) {
+    
+            await pool.query(`INSERT INTO users (username,user_count) VALUES ($1,$2)`, [name, 1])
         }
-
-
+    
+        else {
+            await pool.query(`UPDATE users SET  user_count = user_count + 1 WHERE username = $1`, [name])
+        }
     }
+
+
+
+            // if (regex.test(name)) {
+
+        //     if (namesGreeted[name.toUpperCase()] === undefined) {
+        //         namesGreeted[name.toUpperCase()] = 1,
+        //             await pool.query('insert into users (username) values ($1)', [name]);
+
+        //     } else {
+        //         namesGreeted[name.toUpperCase()]++
+        //     }
+        // }
 
     async function getNames() {
         const result = await pool.query('select * from users')
@@ -30,9 +40,15 @@ module.exports = function (pool) {
 
 
     async function theCount() {
-        const countRes = await pool.query('select count(*) from users')
-        return countRes.rows[0].count;
+        const countRes = await pool.query('select * from users')
+        return countRes.rowCount;
 
+    }
+
+    async function userCount() {
+        const usersTotal = await pool.query('select username, count(*) as Total from users group by username')
+        console.log(usersTotal);
+        return usersTotal.rows[0].count;
     }
 
     // var namesList = Object.keys(namesGreeted)
@@ -82,6 +98,7 @@ module.exports = function (pool) {
     return {
         addNames,
         theCount,
+        userCount,
         getNames,
         greetMe,
         removeValidName,

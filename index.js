@@ -54,6 +54,7 @@ const dbpool = new Pool({
 
 const greetings = greetFactory(dbpool)
 
+
 app.get('/', async function (req, res, next) {
     try {
         const counted = await greetings.theCount()
@@ -65,8 +66,6 @@ app.get('/', async function (req, res, next) {
     } catch (error) {
         next(error)
     }
-
-
 });
 
 app.post('/greet', async function (req, res, next) {
@@ -74,8 +73,6 @@ app.post('/greet', async function (req, res, next) {
     try {
         greetings.addNames(req.body.enterName);
         greetings.greetMe(req.body.enterName, req.body.languages);
-        // const add = await greetings.getNames()
-        // console.log(add);
 
         if (greetings.removeValidName(req.body.languages)) {
             req.flash('info', 'Please enter a valid name');
@@ -107,10 +104,8 @@ app.get('/greeted', async function (req, res, next) {
 app.get('/counter/:username', async function (req, res, next) {
     try {
         const users = req.params.username
-        // let namesList = greetings.getNames()
-        const counted = await greetings.theCount()
+        const counted = await greetings.userCount()
 
-        // let theCounter = greetings.theCount()
 
         res.render('counter', {
             name: users,
