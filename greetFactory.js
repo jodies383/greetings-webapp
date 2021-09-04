@@ -2,13 +2,13 @@ module.exports = function (pool) {
 
     let theMessage;
 
-    var namesGreeted = {}
+    let namesGreeted = {}
 
-    var regex = /^[a-zA-Z]+$/;
+    let regex = /^[a-zA-Z]+$/;
 
 
     async function addNames(name) {
-        var checkname = await pool.query(`SELECT username from users WHERE username = $1`, [name]);
+        let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [name]);
 
         if (checkname.rowCount < 1) {
     
@@ -16,12 +16,9 @@ module.exports = function (pool) {
         }
     
         else {
-            await pool.query(`UPDATE users SET  user_count = user_count + 1 WHERE username = $1`, [name])
+            await pool.query(`UPDATE users SET user_count = user_count + 1 WHERE username = $1`, [name])
         }
     }
-
-
-
             // if (regex.test(name)) {
 
         //     if (namesGreeted[name.toUpperCase()] === undefined) {
@@ -45,10 +42,10 @@ module.exports = function (pool) {
 
     }
 
-    async function userCount() {
-        const usersTotal = await pool.query('select username, count(*) as Total from users group by username')
-        console.log(usersTotal);
-        return usersTotal.rows[0].count;
+    async function userCount(selectedName) {
+        const usersTotal = await pool.query('select user_count from users WHERE username = $1', [selectedName])
+        console.log(usersTotal.rows);
+        return usersTotal.rows;
     }
 
     // var namesList = Object.keys(namesGreeted)

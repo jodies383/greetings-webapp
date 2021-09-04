@@ -104,7 +104,7 @@ app.get('/greeted', async function (req, res, next) {
 app.get('/counter/:username', async function (req, res, next) {
     try {
         const users = req.params.username
-        const counted = await greetings.userCount()
+        const counted = await greetings.userCount(users)
 
 
         res.render('counter', {
