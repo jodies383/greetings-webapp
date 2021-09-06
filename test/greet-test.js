@@ -79,60 +79,41 @@
 //         });
 //     });
 // });
-const assert = require('assert');
+// const assert = require('assert');
 // const CategoryService = require('../services/category-service');
-const pg = require("pg");
-const greetFactory = require('../greetFactory');
-const Pool = pg.Pool;
+// const pg = require("pg");
+// const greetFactory = require('../greetFactory');
+// const Pool = pg.Pool;
 
-// we are using a special test database for the tests
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
+// // we are using a special test database for the tests
+// const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
 
-const pool = new Pool({
-    connectionString
-});
+// const pool = new Pool({
+//     connectionString
+// });
 
-describe('The basic database web app', function(){
+// describe('The basic database web app', function(){
 
-    beforeEach(async function(){
-        // clean the tables before each test run
-        await pool.query("delete from users;");
-    });
+//     beforeEach(async function(){
+//         // clean the tables before each test run
+//         await pool.query("delete from users;");
+//     });
 
-    it('should pass the db test', async function(){
+//     it('should pass the db test', async function(){
         
-        // the Factory Function is called greetFactory
-        let greet = greetFactory(pool);
-        await greet.addNames(
-            'Jane'
-        );
+//         // the Factory Function is called greetFactory
+//         let greet = greetFactory(pool);
+//         await greet.greet(
+//             'Jane'
+//         );
 
-        let count = await greet.getNames();
-        assert.equal(count, {
-            id: 76,
-            user_count: 1,
-            username: 'Jane'
-          }
-        );
+//         // let count = await greet.getNames();
+//         assert.equal('Jane');
 
-    });
-    it('should able to update a category', async function(){
-        // assemble
-        let categoryService = CategoryService(pool);
-        let category = await categoryService.add({
-            description : "Diary"
-        });
+//     });
+  
 
-        // act
-        category.description = 'Milk products';
-        await categoryService.update(category);
-        
-        // assert
-        let updateCategory = await categoryService.get(category.id);
-        assert.equal('Milk products', updateCategory.description);
-    });
-
-    after(function(){
-        pool.end();
-    })
-});
+//     after(function(){
+//         pool.end();
+//     })
+// });

@@ -75,14 +75,15 @@ module.exports = function (pool) {
 
     async function counter(req, res, next) {
         try {
-            const users = req.params.username
-            const usersTotal = await pool.query('select user_count from users WHERE username = $1', [users])
+            let users = req.params.username
+            let usersTotal = await pool.query('select user_count from users WHERE username = $1', [users])
             console.log(usersTotal.rows);
-            const counted = usersTotal.rows;
+            let counted = usersTotal.rows[0];
+            let newCount = counted.user_count;
 
             res.render('counter', {
                 name: users,
-                counter: counted
+                counter: newCount
             });
         } catch (error) {
             next(error)
