@@ -28,16 +28,16 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(flash());
-
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local){
+    useSSL = true;
+}
 const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
 
 const dbpool = new Pool({
     connectionString,
-    user: 'codex',
-    host: connectionString,
-    database: 'users',
-    password: 'pg123',
-    port: 3011,
+    ssl : useSSL
 });
 
 const greetings = greetFactory(dbpool)
