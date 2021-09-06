@@ -2,104 +2,108 @@ module.exports = function (pool) {
 
     let theMessage;
 
-    let namesGreeted = {}
-
     let regex = /^[a-zA-Z]+$/;
 
+    async function home(req, res, next) {
+        try {
+            let counted = await pool.query('select * from users')
+            const countRes = counted.rowCount;
 
-    async function addNames(name) {
-        let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [name]);
+            res.render('index', {
+                greetMessage: theMessage,
+                myCount: countRes
+            });
+        } catch (error) {
+            next(error)
+        }
+    }
 
-        if (checkname.rowCount < 1) {
+    async function greet(req, res, next) {
+
+        try {
+            // addNames
+            let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [req.body.enterName]);
+
+            if (checkname.rowCount < 1) {
+
+                await pool.query(`INSERT INTO users (username,user_count) VALUES ($1,$2)`, [req.body.enterName, 1])
+            }
+
+            else {
+                await pool.query(`UPDATE users SET user_count = user_count + 1 WHERE username = $1`, [req.body.enterName])
+            }
+
+            // greetMe
+            if (req.body.languages === "English" && regex.test(req.body.enterName.toUpperCase())) {
+
+                theMessage = "HELLO, " + req.body.enterName.toUpperCase()
+            }
+            else if (req.body.languages === "Swedish" && regex.test(req.body.enterName.toUpperCase())) {
+
+                theMessage = "HALLÅ, " + req.body.enterName.toUpperCase()
+            }
+            else if (req.body.languages === "Dutch" && regex.test(req.body.enterName.toUpperCase())) {
+
+                theMessage = "HALLO, " + req.body.enterName.toUpperCase()
+
+
+            }
+
+            if (!req.body.languages) {
+                req.flash('info', 'Please enter a valid name');
+            }
+            res.redirect('/');
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async function greeted(req, res, next) {
+        try {
+            const result = await pool.query('select * from users')
+            let namesL = result.rows;
+
+            res.render('greeted', {
+                namesList: namesL
+            });
+
+        } catch (error) {
+            next(error)
+        }
+
+    }
+
+    async function counter(req, res, next) {
+        try {
+            const users = req.params.username
+            const usersTotal = await pool.query('select user_count from users WHERE username = $1', [users])
+            console.log(usersTotal.rows);
+            const counted = usersTotal.rows;
+
+            res.render('counter', {
+                name: users,
+                counter: counted
+            });
+        } catch (error) {
+            next(error)
+        }
+    }
     
-            await pool.query(`INSERT INTO users (username,user_count) VALUES ($1,$2)`, [name, 1])
+    async function resetButton(req, res, next) {
+        try {
+            await pool.query('delete from users')
+
+            res.redirect('/')
+        } catch (error) {
+            next(error)
         }
-    
-        else {
-            await pool.query(`UPDATE users SET user_count = user_count + 1 WHERE username = $1`, [name])
-        }
-    }
-            // if (regex.test(name)) {
-
-        //     if (namesGreeted[name.toUpperCase()] === undefined) {
-        //         namesGreeted[name.toUpperCase()] = 1,
-        //             await pool.query('insert into users (username) values ($1)', [name]);
-
-        //     } else {
-        //         namesGreeted[name.toUpperCase()]++
-        //     }
-        // }
-
-    async function getNames() {
-        const result = await pool.query('select * from users')
-        return result.rows;
-    }
-
-
-    async function theCount() {
-        const countRes = await pool.query('select * from users')
-        return countRes.rowCount;
-
-    }
-
-    async function userCount(selectedName) {
-        const usersTotal = await pool.query('select user_count from users WHERE username = $1', [selectedName])
-        console.log(usersTotal.rows);
-        return usersTotal.rows;
-    }
-
-    // var namesList = Object.keys(namesGreeted)
-    // return namesList.length;
-    function greetMe(name, language) {
-
-
-        if (language === "English" && regex.test(name.toUpperCase())) {
-
-            theMessage = "HELLO, " + name.toUpperCase()
-        }
-        else if (language === "Swedish" && regex.test(name.toUpperCase())) {
-
-            theMessage = "HALLÅ, " + name.toUpperCase()
-        }
-        else if (language === "Dutch" && regex.test(name.toUpperCase())) {
-
-            theMessage = "HALLO, " + name.toUpperCase()
-
-
-        }
-
-
-    }
-
-    function returnMessage() {
-        return theMessage;
-    }
-
-
-    function removeValidName(param1) {
-
-        if (param1 && regex.test(param1)) {
-            return ("");
-
-        }
-
-        else {
-            return ("Please enter a valid name");
-        }
-    }
-
-    async function resetButton() {
-        await pool.query('delete from users')
     }
 
     return {
-        addNames,
-        theCount,
-        userCount,
-        getNames,
-        greetMe,
-        removeValidName,
-        returnMessage,
+        home,
+        greet,
+        greeted,
+        counter,
         resetButton
     }
 

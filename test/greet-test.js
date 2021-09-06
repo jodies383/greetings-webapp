@@ -101,15 +101,35 @@ describe('The basic database web app', function(){
 
     it('should pass the db test', async function(){
         
-        // the Factory Function is called CategoryService
+        // the Factory Function is called greetFactory
         let greet = greetFactory(pool);
-        await greet.addNames({
-            name: "Jane"
-        });
+        await greet.addNames(
+            'Jane'
+        );
 
         let count = await greet.getNames();
-        assert.equal("Jane", "Jane");
+        assert.equal(count, {
+            id: 76,
+            user_count: 1,
+            username: 'Jane'
+          }
+        );
 
+    });
+    it('should able to update a category', async function(){
+        // assemble
+        let categoryService = CategoryService(pool);
+        let category = await categoryService.add({
+            description : "Diary"
+        });
+
+        // act
+        category.description = 'Milk products';
+        await categoryService.update(category);
+        
+        // assert
+        let updateCategory = await categoryService.get(category.id);
+        assert.equal('Milk products', updateCategory.description);
     });
 
     after(function(){

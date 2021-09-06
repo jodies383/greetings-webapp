@@ -1,5 +1,3 @@
-var moment = require('moment');
-moment().format();
 const pg = require("pg");
 const Pool = pg.Pool;
 const express = require('express');
@@ -16,9 +14,6 @@ const bodyParser = require('body-parser');
 const theGreet = require('./greetFactory');
 const greetFactory = require('./greetFactory');
 const app = express();
-
-// const greetings = theGreet();
-
 
 app.engine('handlebars', handlebarSetup);
 app.set('view engine', 'handlebars');
@@ -45,87 +40,13 @@ const dbpool = new Pool({
     port: 3011,
 });
 
-// dbpool
-//     .query('select * from users')
-//     .then(function (namesGreeted) {
-//         console.log(namesGreeted.rows);
-//     })
-
-
 const greetings = greetFactory(dbpool)
 
-
-app.get('/', async function (req, res, next) {
-    try {
-        const counted = await greetings.theCount()
-
-        res.render('index', {
-            greetMessage: greetings.returnMessage(),
-            myCount: counted
-        });
-    } catch (error) {
-        next(error)
-    }
-});
-
-app.post('/greet', async function (req, res, next) {
-
-    try {
-        greetings.addNames(req.body.enterName);
-        greetings.greetMe(req.body.enterName, req.body.languages);
-
-        if (greetings.removeValidName(req.body.languages)) {
-            req.flash('info', 'Please enter a valid name');
-        }
-        res.redirect('/');
-    } catch (error) {
-        next(error)
-    }
-
-
-
-});
-
-app.get('/greeted', async function (req, res, next) {
-    try {
-        let namesL = await greetings.getNames();
-
-        res.render('greeted', {
-            namesList: namesL
-        });
-
-    } catch (error) {
-        next(error)
-    }
-
-});
-
-
-app.get('/counter/:username', async function (req, res, next) {
-    try {
-        const users = req.params.username
-        const counted = await greetings.userCount(users)
-
-
-        res.render('counter', {
-            name: users,
-            counter: counted
-        });
-    } catch (error) {
-        next(error)
-    }
-
-
-});
-
-app.post('/reset', function (req, res, next) {
-    try {
-        greetings.resetButton()
-        res.redirect('/')
-    } catch (error) {
-        next(error)
-    }
-});
+app.get('/', greetings.home);
+app.post('/greet', greetings.greet);
+app.get('/greeted', greetings.greeted);
+app.get('/counter/:username', greetings.counter);
+app.post('/reset', greetings.resetButton);
 
 const PORT = process.env.PORT || 3011;
 
