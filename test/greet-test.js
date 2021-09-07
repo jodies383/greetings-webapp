@@ -79,41 +79,41 @@
 //         });
 //     });
 // });
-const assert = require('assert');
-// const CategoryService = require('../services/category-service');
-const pg = require("pg");
-const greetFactory = require('../greetFactory');
-const Pool = pg.Pool;
+// const assert = require('assert');
+// // const CategoryService = require('../services/category-service');
+// const pg = require("pg");
+// const greetFactory = require('../greetFactory');
+// const Pool = pg.Pool;
 
-// we are using a special test database for the tests
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
+// // we are using a special test database for the tests
+// const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
 
-const pool = new Pool({
-    connectionString
-});
+// const pool = new Pool({
+//     connectionString
+// });
 
-describe('The basic database web app', function(){
+// describe('The basic database web app', function(){
 
-    beforeEach(async function(){
-        // clean the tables before each test run
-        await pool.query("delete from users;");
-    });
+//     beforeEach(async function(){
+//         // clean the tables before each test run
+//         await pool.query("delete from users;");
+//     });
 
-    it('should pass the db test', async function(){
+//     it('should pass the db test', async function(){
         
-        // the Factory Function is called greetFactory
-        let greet = greetFactory(pool);
-        await greet.greet(
-            'Jane'
-        );
+//         // the Factory Function is called greetFactory
+//         let greet = greetFactory(pool);
+//         await greet.greet(
+//             'Jane'
+//         );
 
-        // let count = await greet.getNames();
-        assert.equal('Jane');
+//         // let count = await greet.getNames();
+//         assert.equal('Jane');
 
-    });
+//     });
   
 
-    after(function(){
-        pool.end();
-    })
-});
+//     after(function(){
+//         pool.end();
+//     })
+// });
