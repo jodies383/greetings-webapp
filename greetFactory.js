@@ -26,11 +26,11 @@ module.exports = function (pool) {
 
             if (checkname.rowCount < 1) {
 
-                await pool.query(`INSERT INTO users (username,user_count) VALUES ($1,$2)`, [req.body.enterName, 1])
+                await pool.query(`INSERT INTO users (username,counters) VALUES ($1,$2)`, [req.body.enterName, 1])
             }
 
             else {
-                await pool.query(`UPDATE users SET user_count = user_count + 1 WHERE username = $1`, [req.body.enterName])
+                await pool.query(`UPDATE users SET counters = counters + 1 WHERE username = $1`, [req.body.enterName])
             }
 
             // greetMe
@@ -76,7 +76,7 @@ module.exports = function (pool) {
     async function counter(req, res, next) {
         try {
             let users = req.params.username
-            let usersTotal = await pool.query('select user_count from users WHERE username = $1', [users])
+            let usersTotal = await pool.query('select counters from users WHERE username = $1', [users])
             console.log(usersTotal.rows);
             let counted = usersTotal.rows[0];
             let newCount = counted.user_count;

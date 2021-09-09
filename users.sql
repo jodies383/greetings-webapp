@@ -1,1 +1,1 @@
-create table users (id serial primary key, username text not null, user_count int not null);
+create table users (id serial primary key, username text not null, counters int not null);
