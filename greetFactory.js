@@ -13,8 +13,8 @@ module.exports = function (pool) {
                 greetMessage: theMessage,
                 myCount: countRes
             });
-        } catch (error) {
-            next(error)
+        } catch (err) {
+            next(err)
         }
     }
 
@@ -53,8 +53,8 @@ module.exports = function (pool) {
                 req.flash('info', 'Please enter a valid name');
             }
             res.redirect('/');
-        } catch (error) {
-            next(error)
+        } catch (err) {
+            next(err)
         }
     }
 
@@ -67,8 +67,8 @@ module.exports = function (pool) {
                 namesList: namesL
             });
 
-        } catch (error) {
-            next(error)
+        } catch (err) {
+            next(err)
         }
 
     }
@@ -85,8 +85,8 @@ module.exports = function (pool) {
                 name: users,
                 counter: newCount
             });
-        } catch (error) {
-            next(error)
+        } catch (err) {
+            next(err)
         }
     }
     
@@ -95,8 +95,8 @@ module.exports = function (pool) {
             await pool.query('delete from users')
 
             res.redirect('/')
-        } catch (error) {
-            next(error)
+        } catch (err) {
+            next(err)
         }
     }
 

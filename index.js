@@ -35,12 +35,20 @@ if (process.env.DATABASE_URL && !local){
     useSSL = true;
 }
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
+// const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
+
+// const dbpool = new Pool({
+//     connectionString,
+//     ssl : useSSL
+// });
 
 const dbpool = new Pool({
-    connectionString,
-    ssl : useSSL
-});
+    connectionString: process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users',
+    ssl: {
+        useSSL,
+      rejectUnauthorized: false
+    }
+  });
 
 const greetings = greetFactory(dbpool)
 
