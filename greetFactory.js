@@ -26,7 +26,7 @@ module.exports = function (pool) {
 
             if (checkname.rowCount < 1) {
 
-                await pool.query(`INSERT INTO users ('username','user_count') VALUES ($1,$2)`, [req.body.enterName, 1])
+                await pool.query(`INSERT INTO users (username,'user_count') VALUES ($1,$2)`, [req.body.enterName, 1])
             }
 
             else {
