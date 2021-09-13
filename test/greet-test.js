@@ -104,11 +104,11 @@ describe('The basic database web app', function(){
         // the Factory Function is called greetFactory
         let greet = greetFactory(pool);
         await greet.greet(
-            'Jane'
+            
         );
 
         // let count = await greet.getNames();
-        assert.equal('Jane');
+        assert.equal();
 
     });
   

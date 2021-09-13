@@ -46,7 +46,6 @@ module.exports = function (pool) {
 
                 theMessage = "HALLO, " + req.body.enterName.toUpperCase()
 
-
             }
 
             if (!req.body.languages) {
