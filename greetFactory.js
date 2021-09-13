@@ -78,7 +78,7 @@ module.exports = function (pool) {
             let usersTotal = await pool.query('select counters from users WHERE username = $1', [users])
             console.log(usersTotal.rows);
             let counted = usersTotal.rows[0];
-            let newCount = counted.user_count;
+            let newCount = counted.counters;
 
             res.render('counter', {
                 name: users,
