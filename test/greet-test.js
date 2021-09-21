@@ -92,28 +92,28 @@ const pool = new Pool({
     connectionString
 });
 
-describe('The basic database web app', function(){
+describe('The basic database web app', function () {
 
-    beforeEach(async function(){
+    beforeEach(async function () {
         // clean the tables before each test run
         await pool.query("delete from users;");
     });
 
-    it('should pass the db test', async function(){
-        
+    it('should pass the db test', async function () {
+
         // the Factory Function is called greetFactory
         let greet = greetFactory(pool);
-        await greet.greet(
-            
+        await greet.addNames(
+            "Jane"
         );
 
         // let count = await greet.getNames();
-        assert.equal();
-
+        assert.equal(await greet.select(), "Jane");
+        done()
     });
-  
 
-    after(function(){
+
+    after(function () {
         pool.end();
     })
 });
