@@ -19,19 +19,20 @@ module.exports = function (pool) {
     }
 
     async function addNames(name) {
-        let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [name]);
+        if (regex.test(name)) {
+            let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [name]);
 
-        if (checkname.rowCount < 1) {
+            if (checkname.rowCount < 1) {
 
-            await pool.query(`INSERT INTO users (username,counters) VALUES ($1,$2)`, [name, 1])
+                await pool.query(`INSERT INTO users (username,counters) VALUES ($1,$2)`, [name, 1])
+            }
+
+            else {
+                await pool.query(`UPDATE users SET counters = counters + 1 WHERE username = $1`, [name])
+            }
         }
-
-        else {
-            await pool.query(`UPDATE users SET counters = counters + 1 WHERE username = $1`, [name])
-        }
-
     }
-    function greetMe(name, language) {
+    function greetMe(name, language, req) {
         let upperName = name.toUpperCase()
         if (language === "English" && regex.test(upperName)) {
 
@@ -46,19 +47,24 @@ module.exports = function (pool) {
             theMessage = "HALLO, " + upperName
 
         }
-
-        if (!language) {
+      
+        if (!name & !language) {
+            req.flash('info', 'Please enter name and select a language');
+        }
+        else if (!name || !regex.test(name)) {
             req.flash('info', 'Please enter a valid name');
+        } 
+        else if (!language) {
+            req.flash('info', 'Please select a language');
+
         }
     }
 
     async function namesList() {
-        const result = await pool.query('select * from users')
+        const result = await pool.query('select username from users')
         let namesL = result.rows;
 
         return namesL
-
-
 
     }
 
@@ -72,7 +78,7 @@ module.exports = function (pool) {
     }
 
     async function reset() {
-       let deleted = await pool.query('delete from users')
+        let deleted = await pool.query('delete from users')
 
         return deleted
     }
