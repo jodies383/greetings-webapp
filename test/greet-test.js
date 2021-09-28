@@ -7,11 +7,19 @@ const greetFactory = require('../greetFactory');
 const Pool = pg.Pool;
 
 // we are using a special test database for the tests
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users';
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local){
+    useSSL = true;
+}
 
 const pool = new Pool({
-    connectionString
-});
+    connectionString: process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/users',
+    ssl: {
+        useSSL,
+      rejectUnauthorized: false
+    }
+  });
 
 describe('Greetings', function () {
     const greeting = greet();
