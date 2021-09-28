@@ -130,24 +130,12 @@ td {
 }
 
 @media (max-width:320px) {
+  .greetDiv{
+    display: flex;
+    flex-direction: column;
+  }
   .enter {
-    border: none;
-  }
-}
+    font-size: 100%;
 
-@media (max-width: 375px) {
-  .radioBtns {
-    display: flex;
-    flex-direction: column;
-  }
-  .counter {
-    margin-left: 20%;
-    display: flex;
-    flex-direction: column;
-  }
-  .greetDiv {
-    margin-left: 20%;
-    display: flex;
-    flex-direction: column;
   }
 }
