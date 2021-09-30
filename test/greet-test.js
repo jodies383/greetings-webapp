@@ -23,20 +23,20 @@ const pool = new Pool({
 
 describe('Greetings', function () {
     const greeting = greet();
-    it('should greet "HELLO, JODIE"', function () {
+    it('should greet "Hello, Jodie"', function () {
         (greeting.greetMe('Jodie', 'English'),
 
-            assert.equal(greeting.returnMessage('HELLO, JODIE'), 'HELLO, JODIE'));
+            assert.equal(greeting.returnMessage('Hello, Jodie'), 'Hello, Jodie'));
     });
-    it('should greet "HALLÅ, AMY"', function () {
+    it('should greet "Hallå, Amy"', function () {
         (greeting.greetMe('Amy', 'Swedish'),
 
-            assert.equal(greeting.returnMessage('HALLÅ, AMY'), 'HALLÅ, AMY'));
+            assert.equal(greeting.returnMessage('Hallå, AMY'), 'Hallå, Amy'));
     });
-    it('should greet "HALLO, PAUL"', function () {
+    it('should greet "Hallo, Paul"', function () {
         (greeting.greetMe('Paul', 'Dutch'),
 
-            assert.equal(greeting.returnMessage('HALLO, PAUL'), 'HALLO, PAUL'));
+            assert.equal(greeting.returnMessage('Hallo, Paul'), 'Hallo, Paul'));
     });
 });
 

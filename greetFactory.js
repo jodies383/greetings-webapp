@@ -41,7 +41,7 @@ module.exports = function (pool) {
         }
         else if (language === "Swedish" && regex.test(upperName)) {
 
-            theMessage = "Hallå!, " + upperName
+            theMessage = "Hallå, " + upperName
         }
         else if (language === "Dutch" && regex.test(upperName)) {
 
