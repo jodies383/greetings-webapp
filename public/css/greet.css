@@ -22,7 +22,6 @@ body {
 }
 
 
-
 .myGreet {
   color: rgb(112, 116, 161);
   text-align: center;
@@ -137,7 +136,12 @@ td {
     flex-direction: column;
   }
 }
+@media (max-width:375px){
+  .enter{
+    font-size: 100%;
+  }
 
+}
 @media (max-width:320px) {
   .greetDiv{
     display: flex;
