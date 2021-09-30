@@ -21,11 +21,7 @@ body {
   text-align: center;
 }
 
-.entry {
-  font-size: 38%;
-  color: #e66962;
-  font-weight: bold;
-}
+
 
 .myGreet {
   color: rgb(112, 116, 161);
@@ -112,7 +108,20 @@ td {
 .countlabel a:link{
   text-decoration: none;
 }
+@keyframes errors{
+  to{
+    width: 0;
+    height: 0;
+    overflow: hidden;
 
+  }
+}
+.entry {
+  font-size: 38%;
+  color: #e66962;
+  font-weight: bold;
+  animation: errors 0s ease-in 2s forwards;
+}
 .countName{
   margin-top: 10%;
   text-align: center;

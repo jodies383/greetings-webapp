@@ -9,6 +9,7 @@ const handlebarSetup = exphbs({
     viewPath: './views',
     layoutsDir: './views/layouts'
 });
+// var timeout = require('connect-timeout')
 
 const bodyParser = require('body-parser');
 const greetFactory = require('./routes/greet-routes');
@@ -27,7 +28,7 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(flash());
-
+// app.use(timeout('2s'))
 let useSSL = false;
 let local = process.env.LOCAL || false;
 if (process.env.DATABASE_URL && !local){

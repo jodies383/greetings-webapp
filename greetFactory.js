@@ -18,8 +18,8 @@ module.exports = function (pool) {
         return theMessage;
     }
 
-    async function addNames(name) {
-        if (regex.test(name)) {
+    async function addNames(name, language) {
+        if (regex.test(name) && language) {
             let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [name]);
 
             if (checkname.rowCount < 1) {
@@ -32,7 +32,7 @@ module.exports = function (pool) {
             }
         }
     }
-    function greetMe(name, language, req) {
+    function greetMe(name, language) {
         let upperName = name.toUpperCase()
         if (language === "English" && regex.test(upperName)) {
 
@@ -47,19 +47,25 @@ module.exports = function (pool) {
             theMessage = "HALLO, " + upperName
 
         }
-      
-        if (!name & !language) {
+
+    }
+    function clear(){
+        theMessage = ""
+    }
+
+    function errors(name, language, req) {
+   
+        if (!name && !language) {
             req.flash('info', 'Please enter name and select a language');
+        }
+        else if (name && !language) {
+            req.flash('info', 'Please select a language');
         }
         else if (!name || !regex.test(name)) {
             req.flash('info', 'Please enter a valid name');
-        } 
-        else if (!language) {
-            req.flash('info', 'Please select a language');
-
         }
     }
-
+    
     async function namesList() {
         const result = await pool.query('select username from users')
         let namesL = result.rows;
@@ -87,6 +93,8 @@ module.exports = function (pool) {
         select,
         returnMessage,
         addNames,
+        clear,
+        errors,
         greetMe,
         namesList,
         addCounter,

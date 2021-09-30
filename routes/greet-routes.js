@@ -19,11 +19,16 @@ module.exports = function (pool) {
     }
 
     async function greet(req, res, next) {
-
+        greeted.clear()
         try {
-            if (req.body.languages){
-            await greeted.addNames(req.body.enterName, req.body.languages),
-                greeted.greetMe(req.body.enterName, req.body.languages, req)
+            setTimeout(function () {
+                req.flash('info', 'abc');
+
+            }, 2000);
+            greeted.errors(req.body.enterName, req.body.languages, req)
+            if (req.body.languages) {
+                await greeted.addNames(req.body.enterName, req.body.languages),
+                    greeted.greetMe(req.body.enterName, req.body.languages)
             }
             res.redirect('/');
         } catch (err) {
@@ -60,6 +65,7 @@ module.exports = function (pool) {
     }
 
     async function resetButton(req, res, next) {
+        greeted.clear()
         try {
             await greeted.reset()
 
