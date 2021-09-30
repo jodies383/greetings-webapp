@@ -52,13 +52,13 @@ describe('The basic database web app', function () {
         // the Factory Function is called greetFactory
         let greet = greetFactory(pool);
         await greet.addNames(
-            'Jane'
+            'Jane', 'English'
         );
         await greet.addNames(
-            'Allen'
+            'Allen', 'English'
         );
         await greet.addNames(
-            'James'
+            'James', 'English'
         );
 
 
@@ -71,13 +71,13 @@ describe('The basic database web app', function () {
         // the Factory Function is called greetFactory
         let greet = greetFactory(pool);
         await greet.addNames(
-            'Jane'
+            'Jane', 'English'
         );
         await greet.addNames(
-            'Allen'
+            'Allen', 'English'
         );
         await greet.addNames(
-            'James'
+            'James', 'English'
         );
 
 
@@ -90,13 +90,13 @@ describe('The basic database web app', function () {
         // the Factory Function is called greetFactory
         let greet = greetFactory(pool);
         await greet.addNames(
-            'Jane'
+            'Jane', 'English'
         );
         await greet.addNames(
-            'Jane'
+            'Jane', 'English'
         );
         await greet.addNames(
-            'Jane'
+            'Jane', 'English'
         );
 
 
@@ -108,19 +108,19 @@ describe('The basic database web app', function () {
         // the Factory Function is called greetFactory
         let greet = greetFactory(pool);
         await greet.addNames(
-            'Jane'
+            'Jane', 'English'
         );
         await greet.addNames(
-            '123'
+            '123', 'English'
         );
         await greet.addNames(
-            '!@#$%'
+            '!@#$%', 'English'
         );
 
         let count = await greet.select();
         assert.equal(1, count);
     });
-
+    
     after(function () {
         pool.end();
     })
