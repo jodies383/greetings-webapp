@@ -18,7 +18,7 @@ module.exports = function (pool) {
         return theMessage;
     }
 
-    async function addNames(name, language) {
+    async function addNames(name, language, req) {
         let upperName = name[0].toUpperCase() + name.slice(1).toLowerCase()
         if (regex.test(upperName) && language) {
             let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [upperName]);
@@ -29,7 +29,10 @@ module.exports = function (pool) {
             }
 
             else {
-                await pool.query(`UPDATE users SET counters = counters + 1 WHERE username = $1`, [upperName])
+                await pool.query(`UPDATE users SET counters = counters + 1 WHERE username = $1`, [upperName]),
+                    req.flash('info', 'This name has already been greeted'),
+                    theMessage = ""
+
             }
         }
     }
@@ -50,12 +53,12 @@ module.exports = function (pool) {
         }
 
     }
-    function clear(){
+    function clear() {
         theMessage = ""
     }
 
     function errors(name, language, req) {
-   
+    
         if (!name && !language) {
             req.flash('info', 'Please enter name and select a language');
         }
@@ -66,7 +69,7 @@ module.exports = function (pool) {
             req.flash('info', 'Please enter a valid name');
         }
     }
-    
+
     async function namesList() {
         const result = await pool.query('select username from users')
         let namesL = result.rows;

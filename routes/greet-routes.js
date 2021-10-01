@@ -4,8 +4,8 @@ module.exports = function (pool) {
     const greeted = greetFactory(pool)
 
 
-    async function home(req, res, next) {
-        try {
+    async function home(req, res) {
+        // try {
             let home = await greeted.select()
             let message = greeted.returnMessage()
 
@@ -13,45 +13,45 @@ module.exports = function (pool) {
                 greetMessage: message,
                 myCount: home
             });
-        } catch (err) {
-            throw err
-        }
+        // } catch (err) {
+        //     throw err
+        // }
     }
 
-    async function greet(req, res, next) {
+    async function greet(req, res) {
         greeted.clear()
-        try {
+        // try {
             setTimeout(function () {
                 req.flash('info', 'abc');
 
             }, 2000);
             greeted.errors(req.body.enterName, req.body.languages, req)
             if (req.body.languages) {
-                await greeted.addNames(req.body.enterName, req.body.languages),
+                await greeted.addNames(req.body.enterName, req.body.languages, req),
                     greeted.greetMe(req.body.enterName, req.body.languages)
             }
             res.redirect('/');
-        } catch (err) {
-            throw err
-        }
+        // } catch (err) {
+        //     throw err
+        // }
     }
 
-    async function greetedNames(req, res, next) {
-        try {
+    async function greetedNames(req, res) {
+        // try {
             let namesList = await greeted.namesList()
 
             res.render('greeted', {
                 namesList: namesList
             });
 
-        } catch (err) {
-            throw err
-        }
+        // } catch (err) {
+        //     throw err
+        // }
 
     }
 
-    async function counter(req, res, next) {
-        try {
+    async function counter(req, res) {
+        // try {
             let users = req.params.username
             let newCount = await greeted.addCounter(users)
 
@@ -59,20 +59,20 @@ module.exports = function (pool) {
                 name: users,
                 counter: newCount
             });
-        } catch (err) {
-            throw err
-        }
+        // } catch (err) {
+        //     throw err
+        // }
     }
 
-    async function resetButton(req, res, next) {
+    async function resetButton(req, res) {
         greeted.clear()
-        try {
+        // try {
             await greeted.reset()
 
             res.redirect('/')
-        } catch (err) {
-            throw err
-        }
+        // } catch (err) {
+        //     throw err
+        // }
     }
 
     return {
