@@ -19,24 +19,28 @@ module.exports = function (pool) {
     }
 
     async function addNames(name, language) {
-        let upperName = name[0].toUpperCase() + name.slice(1).toLowerCase()
-        if (regex.test(upperName) && language) {
-            let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [upperName]);
+        if (name) {
+            let upperName = name[0].toUpperCase() + name.slice(1).toLowerCase()
+            if (regex.test(upperName) && language) {
+                let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [upperName]);
 
-            if (checkname.rowCount < 1) {
+                if (checkname.rowCount < 1) {
 
-                await pool.query(`INSERT INTO users (username,counters) VALUES ($1,$2)`, [upperName, 1])
-            }
+                    await pool.query(`INSERT INTO users (username,counters) VALUES ($1,$2)`, [upperName, 1])
+                }
 
-            else {
-                await pool.query(`UPDATE users SET counters = counters + 1 WHERE username = $1`, [upperName])
+                else {
+                    await pool.query(`UPDATE users SET counters = counters + 1 WHERE username = $1`, [upperName])
 
+                }
             }
         }
     }
+    
     function greetMe(name, language) {
-        let upperName = name[0].toUpperCase() + name.slice(1).toLowerCase()
-        
+        if (name) {
+            let upperName = name[0].toUpperCase() + name.slice(1).toLowerCase()
+
             if (language === "English" && regex.test(upperName)) {
 
                 theMessage = "Hello, " + upperName
@@ -50,21 +54,23 @@ module.exports = function (pool) {
                 theMessage = "Hallo, " + upperName
 
             }
-
+        }
     }
     function clear() {
         theMessage = ""
     }
 
     async function errors(name, language, req) {
-        let upperName = name[0].toUpperCase() + name.slice(1).toLowerCase()
+        if (name && language) {
+            let upperName = name[0].toUpperCase() + name.slice(1).toLowerCase()
 
-        let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [upperName]);
+            let checkname = await pool.query(`SELECT username from users WHERE username = $1`, [upperName]);
 
-        if (!checkname.rowCount < 1) {
-            req.flash('info', 'This name has already been greeted');
+            if (!checkname.rowCount < 1) {
+                req.flash('info', 'This name has already been greeted');
+            }
         }
-        if (!name && !language) {
+        else if (!name && !language) {
             req.flash('info', 'Please enter name and select a language');
         }
         else if (name && !language) {
@@ -73,6 +79,7 @@ module.exports = function (pool) {
         else if (!name || !regex.test(name)) {
             req.flash('info', 'Please enter a valid name');
         }
+
     }
 
     async function namesList() {
