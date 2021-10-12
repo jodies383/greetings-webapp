@@ -1,7 +1,5 @@
-
 const greet = require('../greetFactory');
 const assert = require('assert');
-// const CategoryService = require('../services/category-service');
 const pg = require("pg");
 const greetFactory = require('../greetFactory');
 const Pool = pg.Pool;
